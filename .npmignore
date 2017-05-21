@@ -1,0 +1,8 @@
+src
+node_modules
+tsconfig.json
+.npmignore
+.gitignore
+makefile
+.idea
+dist/configuration.json
