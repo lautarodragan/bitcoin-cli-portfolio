@@ -3,12 +3,9 @@
 import 'colors'
 
 import { printMovements, augmentMovements, getTotal, readMovements } from './bitcoins'
+import { Configuration } from './Configuration'
 
 const movements = readMovements()
-
-const currentRate = 35261
-const currency = 'ARS'
-const dollarRate = 1 / 16
 
 console.log()
 console.log()
@@ -20,10 +17,13 @@ printMovements(augmentMovements(movements))
 const total = getTotal(movements)
 
 console.log()
+console.log('Current Rate'.yellow.bold)
+console.log(`1 XBT = ${Configuration.XbtRateAmount} ${Configuration.XbtRateCurrency}`.yellow)
+console.log()
 console.log('Totals'.yellow.bold)
 console.log(`${total} XBT`.yellow)
-console.log(`${Math.round(currentRate * total)} ${currency}`.yellow)
-console.log(`${Math.round(currentRate * total * dollarRate)} USD`.yellow)
+console.log(`${Math.round(Configuration.XbtRateAmount * total)} ${Configuration.XbtRateCurrency}`.yellow)
+console.log(`${Math.round(Configuration.XbtRateAmount * total * Configuration.AlternativeRate)} ${Configuration.AlternativeCurrency}`.yellow)
 
 console.log()
 console.log()

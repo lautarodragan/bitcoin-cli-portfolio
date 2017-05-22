@@ -6,6 +6,10 @@ const ConfigurationPath = __dirname + '/configuration.json'
 
 export const Configuration = new class Configuration {
   private _movementsPath: string
+  private _xbtRateAmount: number
+  private _xbtRateCurrency: string
+  private _alternativeCurrency: string
+  private _alternativeRate: number
 
   constructor() {
     this.load()
@@ -26,13 +30,53 @@ export const Configuration = new class Configuration {
 
   public set MovementsPath(value: string) {
     this._movementsPath = value
-    fs.writeFileSync(ConfigurationPath, JSON.stringify(this), 'utf8')
+    this.write()
+  }
+
+  public get XbtRateAmount() {
+    return this._xbtRateAmount
+  }
+
+  public set XbtRateAmount(value: number) {
+    this._xbtRateAmount = value
+    this.write()
+  }
+
+  public get XbtRateCurrency() {
+    return this._xbtRateCurrency
+  }
+
+  public set XbtRateCurrency(value: string) {
+    this._xbtRateCurrency = value
+    this.write()
+  }
+
+  public get AlternativeCurrency() {
+    return this._alternativeCurrency
+  }
+
+  public set AlternativeCurrency(value: string) {
+    this._alternativeCurrency = value
+    this.write()
+  }
+
+  public get AlternativeRate() {
+    return this._alternativeRate
+  }
+
+  public set AlternativeRate(value: number) {
+    this._alternativeRate = value
+    this.write()
   }
 
   private load() {
     const json = this.read()
 
     this._movementsPath = json.movementsPath
+    this._xbtRateCurrency = json.xbtRateCurrency
+    this._xbtRateAmount = json.xbtRateAmount
+    this._alternativeRate = json.alternativeRate
+    this._alternativeCurrency = json.alternativeCurrency
   }
 
   private read() {
@@ -47,9 +91,17 @@ export const Configuration = new class Configuration {
     }
   }
 
+  private write() {
+    fs.writeFileSync(ConfigurationPath, JSON.stringify(this, null, '  '), 'utf8')
+  }
+
   toJSON() {
     return {
-      movementsPath: this._movementsPath
+      movementsPath: this._movementsPath,
+      xbtRateCurrency: this._xbtRateCurrency,
+      xbtRateAmount: this._xbtRateAmount,
+      alternativeRate: this._alternativeRate,
+      alternativeCurrency: this._alternativeCurrency,
     }
   }
 }
