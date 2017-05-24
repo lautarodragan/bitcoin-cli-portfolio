@@ -14,11 +14,15 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^7.0.21",
+    "@types/node-fetch": "^1.6.7",
     "@types/readline-sync": "^1.4.2"
   },
   "dependencies": {
     "colors": "^1.1.2",
+    "node-fetch": "^1.7.0",
     "readline-sync": "^1.4.7"
   },
-  "engines" : { "node" : ">=7.5" }
+  "engines": {
+    "node": ">=7.5"
+  }
 }

@@ -6,6 +6,7 @@ const ConfigurationPath = __dirname + '/configuration.json'
 
 export const Configuration = new class Configuration {
   private _movementsPath: string
+  private _lastRequestTime: Date
   private _xbtRateAmount: number
   private _xbtRateCurrency: string
   private _alternativeCurrency: string
@@ -30,6 +31,15 @@ export const Configuration = new class Configuration {
 
   public set MovementsPath(value: string) {
     this._movementsPath = value
+    this.write()
+  }
+
+  public get LastRequestTime() {
+    return this._lastRequestTime
+  }
+
+  public set LastRequestTime(value: Date) {
+    this._lastRequestTime = value
     this.write()
   }
 
@@ -77,6 +87,7 @@ export const Configuration = new class Configuration {
     this._xbtRateAmount = json.xbtRateAmount
     this._alternativeRate = json.alternativeRate
     this._alternativeCurrency = json.alternativeCurrency
+    this._lastRequestTime = json.lastRequestTime && new Date(json.lastRequestTime)
   }
 
   private read() {
@@ -102,8 +113,10 @@ export const Configuration = new class Configuration {
       xbtRateAmount: this._xbtRateAmount,
       alternativeRate: this._alternativeRate,
       alternativeCurrency: this._alternativeCurrency,
+      lastRequestTime: this._lastRequestTime,
     }
   }
+
 }
 
 

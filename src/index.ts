@@ -4,7 +4,9 @@ import 'colors'
 
 import './Array'
 import { Configuration } from './Configuration'
-import { printMovements, augmentMovements, getTotal, readMovements } from './bitcoins'
+import { printMovements, augmentMovements, getTotal, readMovements, twirlTimer } from './bitcoins'
+import { satoshiTango } from './Rate'
+import { clearInterval } from 'timers'
 
 const movements = augmentMovements(readMovements())
 
@@ -19,18 +21,29 @@ console.log()
 printMovements(movements)
 
 console.log()
-console.log('Current Rate'.yellow.bold)
-console.log(`1 XBT = ${Configuration.XbtRateAmount} ${Configuration.XbtRateCurrency}`.yellow)
-console.log()
+//console.log('Retrieving current rate...')
 
-console.log('Totals'.yellow.bold)
-console.log(`${total} XBT`.yellow)
-console.log(`${Math.round(Configuration.XbtRateAmount * total)} ${Configuration.XbtRateCurrency}`.yellow)
-console.log(`${Math.round(Configuration.XbtRateAmount * total * Configuration.AlternativeRate)} ${Configuration.AlternativeCurrency}`.yellow)
+const twirlInterval = twirlTimer()
 
-console.log()
-console.log('Gain'.yellow.bold)
-console.log(`${Math.round(gain)} ARS`.yellow)
+satoshiTango().then(_ => {
+  clearInterval(twirlInterval)
+  process.stdout.write('\r    \n')
 
-console.log()
-console.log()
+  //console.log()
+  console.log('Current Rate'.yellow.bold)
+  console.log(`1 XBT = ${Configuration.XbtRateAmount} ${Configuration.XbtRateCurrency}`.yellow)
+  console.log()
+
+  console.log('Totals'.yellow.bold)
+  console.log(`${total} XBT`.yellow)
+  console.log(`${Math.round(Configuration.XbtRateAmount * total)} ${Configuration.XbtRateCurrency}`.yellow)
+  console.log(`${Math.round(Configuration.XbtRateAmount * total * Configuration.AlternativeRate)} ${Configuration.AlternativeCurrency}`.yellow)
+
+  console.log()
+  console.log('Gain'.yellow.bold)
+  console.log(`${Math.round(gain)} ARS`.yellow)
+
+  console.log()
+  console.log()
+})
+
