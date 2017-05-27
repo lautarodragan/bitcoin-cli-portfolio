@@ -16,8 +16,9 @@ export function printMovements(movements: ReadonlyArray<AugmentedMovement>) {
       Math.abs(movement.amount).toString(),
       movement.price.toString(),
       movement.total.toString(),
+      movement.left.toString(),
       movement.gain ? Math.round(movement.gain).toString() : ''])
-    .prepend(['Date', 'Operation', 'Amount', 'Price', 'Total', 'Gain'])
+    .prepend(['Date', 'Operation', 'Amount', 'Price', 'Total', 'Left', 'Gain'])
     .map(movement => movement.map(value => value.padEnd(12, ' ')))
     .map(movement => movement[1].startsWith('Buy') ? movement.join(' | ').magenta : movement.join(' | '))
 

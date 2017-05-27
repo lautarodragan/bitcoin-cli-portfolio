@@ -2,7 +2,7 @@ import fetch from 'node-fetch'
 
 import { Configuration } from './Configuration'
 
-export function satoshiTango() {
+export function updateSatoshiTango() {
   if (!Configuration.LastRequestTime || new Date().getTime() - Configuration.LastRequestTime.getTime() >= 1E4) {
     return getRate().then(rate => {
       Configuration.XbtRateAmount = rate
