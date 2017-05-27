@@ -3,7 +3,7 @@
 ## How much have I made with bitcoins?
 Bitcoins is a super-simple command-line software that shows you how much money you have made each time you sold some bitcoins.
 
-**Notice**: bitcoins does not allow you to trade, nor does it do it automatically for you.
+**Notice**: bitcoins does not enable you to trade, nor does it do it automatically for you.
 You still need to do your bitcoin trades in an exchange such as [Kraken](https://www.kraken.com/) or [SatoshiTango](https://satoshitango.com/home).
 
 ### How to Install
