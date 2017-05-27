@@ -24,6 +24,15 @@ export function augmentMovements(movements: ReadonlyArray<Movement>): ReadonlyAr
   }))
 }
 
+export function movementsWithRemainder(movements: ReadonlyArray<Movement>): ReadonlyArray<AugmentedMovement> {
+  return movements.map(movement => ({
+    ...movement,
+    total: null,
+    left: getMovementLeft(movements, movement),
+    gain: null
+  }))
+}
+
 export function readMovements(): ReadonlyArray<Movement> {
   return JSON.parse(fs.readFileSync(Configuration.MovementsPath, 'utf8')).map((movement: any) => ({
     ...movement,
@@ -60,29 +69,31 @@ function getMovementGain(movements: ReadonlyArray<Movement>, movement: Movement)
   if (movementIndex < 1)
     return null
 
-  function findTotalZeroIndex() {
-    // Find earliest entry off of which bitcoins could be taken
-    for (let i = movementIndex - 1; i >= 0; i--) {
-      if (movements[i].amount > 0 && getMovementTotal(movements, movements[i]) === movements[i].amount) {
-        return i
-      }
-    }
-    throw new Error(`Could not find buying movement earlier than (${JSON.stringify(movement)}) that follows a zero-balance movement.`)
+  function indexOfStarterPurchase() {
+    const purchase = movements
+      .slice(0, movementIndex)
+      .filter(_ => _.amount > 0)
+      .reverse()
+      .find(_ => _.amount === getMovementTotal(movements, _))
+
+    const index = movements.indexOf(purchase)
+
+    if (index < 0)
+      throw new Error(`Could not find purchase earlier than (${JSON.stringify(movement)}) that immediately follows a zero-balance movement.`)
+
+    return index
   }
 
-  let gain = 0, xbt = movement.amount
+  const totalZeroIndex = indexOfStarterPurchase()
 
-  const totalZeroIndex = findTotalZeroIndex()
-
-
-  for (let i = totalZeroIndex; i < movementIndex; i++) {
-    if (movements[i].amount < 0)
-      continue // actually, expendableXBT -= movements[i].amount
-    const xbtToUse = Math.min(xbt, getMovementTotal(movements, movements[i]))
-    gain += xbtToUse * -(movement.price - movements[i].price)
-    xbt -= xbtToUse
-  }
-
-  return gain
+  return movementsWithRemainder(movements.slice(totalZeroIndex, movementIndex))
+    .filter(_ => _.amount > 0)
+    .reduce(((previousValue, currentValue) => ({
+      gain: previousValue.xbt
+        ? previousValue.gain + Math.min(previousValue.xbt, currentValue.left) * (movement.price - currentValue.price)
+        : previousValue.gain,
+      xbt: Math.max(previousValue.xbt - currentValue.left, 0)
+    })), {gain: 0, xbt: -movement.amount})
+    .gain
 
 }
