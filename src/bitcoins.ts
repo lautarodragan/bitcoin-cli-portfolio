@@ -23,24 +23,6 @@ export const augmentMovements = (movements: ReadonlyArray<Movement>): ReadonlyAr
   gain: getMovementGain(movements, movement)
 }))
 
-export function printMovements(movements: ReadonlyArray<AugmentedMovement>) {
-  const lines = movements
-    .map(movement => [
-      movement.date.toLocaleDateString(),
-      movement.amount > 0 ? 'Buy' : 'Sell',
-      Math.abs(movement.amount).toString(),
-      movement.price.toString(),
-      movement.total.toString(),
-      movement.gain ? Math.round(movement.gain).toString() : ''])
-    .prepend(['Date', 'Operation', 'Amount', 'Price', 'Total', 'Gain'])
-    .map(movement => movement.map(value => value.padEnd(12, ' ')))
-    .map(movement => movement[1].startsWith('Buy') ? movement.join(' | ').magenta : movement.join(' | '))
-
-  for (let i = 0; i < lines.length; i++) {
-    console.log(i ? lines[i] : lines[i].bold)
-  }
-}
-
 export function readMovements(): ReadonlyArray<Movement> {
   return JSON.parse(fs.readFileSync(Configuration.MovementsPath, 'utf8')).map((movement: any) => ({
     ...movement,
