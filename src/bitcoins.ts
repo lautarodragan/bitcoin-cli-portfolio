@@ -69,12 +69,3 @@ function getMovementGain(movements: ReadonlyArray<Movement>, movement: Movement)
   return gain
 
 }
-
-export const twirlTimer = function(message?: string) {
-  const P = ["\\", "|", "/", "-"];
-  let x = 0;
-  return setInterval(function() {
-    process.stdout.write(`\r${message || ''} ${P[x++]}`);
-    x &= 3;
-  }, 250);
-};

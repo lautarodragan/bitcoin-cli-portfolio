@@ -1,6 +1,13 @@
 import { AugmentedMovement } from './bitcoins'
 import { Configuration } from './Configuration'
 
+export function printTitle() {
+  console.log()
+  console.log()
+  console.log('Bitcoin Movement Tracker'.yellow.bold)
+  console.log()
+}
+
 export function printMovements(movements: ReadonlyArray<AugmentedMovement>) {
   const lines = movements
     .map(movement => [
@@ -17,6 +24,8 @@ export function printMovements(movements: ReadonlyArray<AugmentedMovement>) {
   for (let i = 0; i < lines.length; i++) {
     console.log(i ? lines[i] : lines[i].bold)
   }
+
+  console.log()
 }
 
 export function printTotals(total: number, gain: number) {
