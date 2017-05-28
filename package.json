@@ -1,7 +1,7 @@
 {
   "name": "bitcoins",
-  "version": "0.5.2",
-  "description": "",
+  "version": "0.5.3",
+  "description": "Making money with bitcoins?",
   "main": "dist/index.js",
   "bin": {
     "bitcoins": "dist/index.js"
@@ -24,5 +24,9 @@
   },
   "engines": {
     "node": ">=7.5"
+  },
+  "repository": {
+    "url": "https://github.com/lautarodragan/bitcoins",
+    "type": "git"
   }
 }
