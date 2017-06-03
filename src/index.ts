@@ -49,7 +49,7 @@ function version() {
   console.log('bitcoins version ' + packageJson.version)
 }
 
-const { command, argv } = commandLineCommands([null, '--version', 'which'])
+const { command, argv } = commandLineCommands([null, 'version', 'which'])
 
 switch (command) {
   case 'which':
@@ -59,6 +59,5 @@ switch (command) {
     version()
     break
   case null:
-    console.log('main', argv)
     main()
 }
