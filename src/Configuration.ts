@@ -4,7 +4,7 @@ import 'colors'
 
 const ConfigurationPath = __dirname + '/configuration.json'
 
-export const Configuration = new class Configuration {
+export const Configuration = new class {
   private _movementsPath: string
   private _lastRequestTime: Date
   private _xbtRateAmount: number
