@@ -1,4 +1,4 @@
-#!/usr/bin/env node --harmony
+#!/usr/bin/env node
 
 import 'colors'
 import * as commandLineCommands from 'command-line-commands'
