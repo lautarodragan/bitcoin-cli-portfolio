@@ -3,8 +3,8 @@ import * as os from 'os'
 import * as readlineSync from 'readline-sync'
 import 'colors'
 
-const ConfigurationDirectoryPath = os.homedir() + '/.bitcoins'
-const ConfigurationPath = ConfigurationDirectoryPath + '/configuration.json'
+export const ConfigurationDirectoryPath = os.homedir() + '/.bitcoins'
+export const ConfigurationPath = ConfigurationDirectoryPath + '/configuration.json'
 
 export const Configuration = new class {
   private _movementsPath: string

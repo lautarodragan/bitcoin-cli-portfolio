@@ -8,7 +8,7 @@ import { augmentMovements, readMovements } from './bitcoins'
 import { updateSatoshiTango } from './Rate'
 import { printMovements, printTitle, printTotals } from './Printer'
 import { TwirlInterval } from './TwirlInterval'
-import { Configuration } from './Configuration'
+import { Configuration, ConfigurationPath } from './Configuration'
 const packageJson = require('../package.json')
 
 const twirl = new TwirlInterval()
@@ -32,7 +32,7 @@ async function main() {
 function which(file: string) {
   switch (file) {
     case 'configuration':
-      console.log(__dirname + '/configuration.json')
+      console.log(ConfigurationPath)
       break
     case 'bitcoins':
       console.log(Configuration.MovementsPath)
