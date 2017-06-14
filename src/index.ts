@@ -39,7 +39,7 @@ function which(file: string) {
       break
     default:
       console.log('Configuration'.bold)
-      console.log(__dirname + '/configuration.json')
+      console.log(ConfigurationPath)
       console.log('bitcoins.json file'.bold)
       console.log(Configuration.MovementsPath)
   }
