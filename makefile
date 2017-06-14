@@ -1,7 +1,7 @@
 default: compile run
 
 run:
-	node --harmony dist
+	node dist
 
 compile:
 	tsc

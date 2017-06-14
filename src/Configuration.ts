@@ -1,8 +1,10 @@
 import * as fs from 'fs'
+import * as os from 'os'
 import * as readlineSync from 'readline-sync'
 import 'colors'
 
-const ConfigurationPath = __dirname + '/configuration.json'
+const ConfigurationDirectoryPath = os.homedir() + '/.bitcoins'
+const ConfigurationPath = ConfigurationDirectoryPath + '/configuration.json'
 
 export const Configuration = new class {
   private _movementsPath: string
@@ -103,6 +105,9 @@ export const Configuration = new class {
   }
 
   private write() {
+    if (!fs.existsSync(ConfigurationDirectoryPath))
+      fs.mkdirSync(ConfigurationDirectoryPath)
+
     fs.writeFileSync(ConfigurationPath, JSON.stringify(this, null, '  '), 'utf8')
   }
 
